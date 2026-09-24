@@ -12,12 +12,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             user-select: none;
         }
-.game-image {
-  width: 100%;
-  max-height: 180px;
-  object-fit: cover;
-  border-radius: 8px;
-}
+
         body {
             background: linear-gradient(135deg, #0b111e 0%, #162447 100%);
             color: #ffffff;
@@ -71,10 +66,10 @@
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px;
-            padding: 24px;
+            padding: 20px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 25px;
             backdrop-filter: blur(10px);
             transition: transform 0.2s, border-color 0.2s;
         }
@@ -82,6 +77,21 @@
         .game-card:hover {
             border-color: #00d2ff;
             transform: translateY(-2px);
+        }
+
+        /* صورة غلاف اللعبة */
+        .game-image {
+            width: 110px;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid rgba(0, 210, 255, 0.4);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            flex-shrink: 0;
+        }
+
+        .game-info {
+            flex-grow: 1;
         }
 
         .game-info h2 {
@@ -98,6 +108,7 @@
         .btn-group {
             display: flex;
             gap: 15px;
+            flex-shrink: 0;
         }
 
         button {
@@ -199,7 +210,8 @@
 
         <!-- بطاقة اللعبة -->
         <div class="game-card">
-<img src="Minecraft-PS4-Cover.png" alt="Minecraft" class="game-image">
+            <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/co49x5.jpg" alt="Minecraft" class="game-image">
+            
             <div class="game-info">
                 <h2>Minecraft (ماينكرافت)</h2>
                 <p>CUSA00265 | الحجم: متوفر للتحميل المباشر</p>
@@ -229,7 +241,6 @@
             notify.style.display = 'block';
             notify.innerText = "جاري إرسال طلب التثبيت إلى GoldHEN...";
 
-            // إرسال طلب التثبيت عبر GoldHEN Package Installer API (منفذ 12800)
             fetch("http://127.0.0.1:12800/api/install", {
                 method: "POST",
                 headers: {
