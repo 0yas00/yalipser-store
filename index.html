@@ -31,7 +31,7 @@
             align-items: center;
             border-bottom: 2px solid rgba(255, 255, 255, 0.1);
             padding-bottom: 20px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .logo {
@@ -43,14 +43,29 @@
             letter-spacing: 1px;
         }
 
-        .status-badge {
-            background: rgba(0, 210, 255, 0.15);
-            border: 1px solid #00d2ff;
-            color: #00d2ff;
-            padding: 8px 18px;
+        .ip-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 6px 14px;
             border-radius: 20px;
-            font-size: 0.95rem;
-            font-weight: 600;
+            border: 1px solid rgba(0, 210, 255, 0.3);
+        }
+
+        .ip-container label {
+            font-size: 0.85rem;
+            color: #00d2ff;
+        }
+
+        .ip-input {
+            background: transparent;
+            border: none;
+            color: #fff;
+            outline: none;
+            font-weight: bold;
+            width: 120px;
+            text-align: center;
         }
 
         .main-container {
@@ -61,7 +76,6 @@
             gap: 30px;
         }
 
-        /* بطاقة اللعبة */
         .game-card {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -79,7 +93,6 @@
             transform: translateY(-2px);
         }
 
-        /* صورة غلاف اللعبة */
         .game-image {
             width: 110px;
             height: 130px;
@@ -144,7 +157,6 @@
             border-color: #fff;
         }
 
-        /* خانة عن المطور / عني */
         .about-section {
             background: rgba(0, 210, 255, 0.04);
             border: 1px solid rgba(0, 210, 255, 0.2);
@@ -178,7 +190,6 @@
             margin: 0 4px;
         }
 
-        /* نافذة الإشعار */
         #notification {
             position: fixed;
             bottom: 30px;
@@ -191,6 +202,7 @@
             display: none;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
             animation: fadeIn 0.3s ease;
+            z-index: 1000;
         }
 
         @keyframes fadeIn {
@@ -203,7 +215,10 @@
 
     <header>
         <div class="logo">yalipser Store</div>
-        <div class="status-badge">GoldHEN API Ready</div>
+        <div class="ip-container">
+            <label>PS4 IP:</label>
+            <input type="text" id="ps4Ip" class="ip-input" value="127.0.0.1" onchange="localStorage.setItem('ps4_ip', this.value)">
+        </div>
     </header>
 
     <div class="main-container">
@@ -222,7 +237,7 @@
             </div>
         </div>
 
-        <!-- خانة عني / المطور -->
+        <!-- خانة عن المطور -->
         <div class="about-section">
             <h3>📌 عني (About Me)</h3>
             <p>
@@ -233,32 +248,51 @@
 
     </div>
 
-    <div id="notification">جاري إرسال أمر التثبيت إلى GoldHEN...</div>
+    <div id="notification">جاري إرسال أمر التثبيت...</div>
 
     <script>
-        function installPkg(pkgUrl) {
-            const notify = document.getElementById('notification');
-            notify.style.display = 'block';
-            notify.innerText = "جاري إرسال طلب التثبيت إلى GoldHEN...";
+        // استرجاع عنوان الـ IP المحفوظ
+        const savedIp = localStorage.getItem('ps4_ip');
+        if (savedIp) {
+            document.getElementById('ps4Ip').value = savedIp;
+        }
 
-            fetch("http://127.0.0.1:12800/api/install", {
+        function showNotify(text, color = '#10b981') {
+            const notify = document.getElementById('notification');
+            notify.style.background = color;
+            notify.innerText = text;
+            notify.style.display = 'block';
+            setTimeout(() => { notify.style.display = 'none'; }, 4500);
+        }
+
+        function installPkg(pkgUrl) {
+            const ip = document.getElementById('ps4Ip').value.trim() || '127.0.0.1';
+            const endpoint = `http://${ip}:12800/api/install`;
+
+            showNotify("جاري إرسال الطلب إلى GoldHEN...", "#3a7bd5");
+
+            const payload = JSON.stringify({
+                type: "direct",
+                packages: [pkgUrl]
+            });
+
+            // إرسال الطلب عبر fetch مع معالجة قيود الأمان
+            fetch(endpoint, {
                 method: "POST",
+                mode: "no-cors",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "text/plain"
                 },
-                body: JSON.stringify({
-                    "type": "direct",
-                    "packages": [pkgUrl]
-                })
+                body: payload
             })
-            .then(res => res.json())
-            .then(data => {
-                notify.innerText = "تم إرسال اللعبة بنجاح! تفقد قائمة التنزيلات في السوني.";
-                setTimeout(() => { notify.style.display = 'none'; }, 4000);
+            .then(() => {
+                showNotify("تم إرسال الأمر للجهاز! تحقق من قائمة التنزيلات (Notifications).", "#10b981");
             })
             .catch(err => {
-                notify.innerText = "تم إرسال الأمر (تأكد من تفعيل Server في GoldHEN).";
-                setTimeout(() => { notify.style.display = 'none'; }, 4000);
+                showNotify("تعذر الإرسال التلقائي، جاري بدء التنزيل المباشر...", "#eab308");
+                setTimeout(() => {
+                    window.location.href = pkgUrl;
+                }, 1000);
             });
         }
     </script>
