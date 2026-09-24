@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>yalipser Store</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            user-select: none;
+        }
+.game-image {
+  width: 100%;
+  max-height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+        body {
+            background: linear-gradient(135deg, #0b111e 0%, #162447 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #00d2ff, #3a7bd5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .status-badge {
+            background: rgba(0, 210, 255, 0.15);
+            border: 1px solid #00d2ff;
+            color: #00d2ff;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* بطاقة اللعبة */
+        .game-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .game-card:hover {
+            border-color: #00d2ff;
+            transform: translateY(-2px);
+        }
+
+        .game-info h2 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .game-info p {
+            color: #a0aec0;
+            font-size: 0.95rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            outline: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-base {
+            background: #00d2ff;
+            color: #0b111e;
+        }
+
+        .btn-base:hover {
+            background: #3a7bd5;
+            color: #fff;
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+        }
+
+        .btn-update {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-update:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #fff;
+        }
+
+        /* خانة عن المطور / عني */
+        .about-section {
+            background: rgba(0, 210, 255, 0.04);
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .about-section h3 {
+            color: #00d2ff;
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .about-section p {
+            color: #e2e8f0;
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        .developer-tag {
+            display: inline-block;
+            background: linear-gradient(45deg, #00d2ff, #3a7bd5);
+            color: #0b111e;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 6px;
+            margin: 0 4px;
+        }
+
+        /* نافذة الإشعار */
+        #notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #10b981;
+            color: white;
+            padding: 14px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            display: none;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">yalipser Store</div>
+        <div class="status-badge">GoldHEN API Ready</div>
+    </header>
+
+    <div class="main-container">
+
+        <!-- بطاقة اللعبة -->
+        <div class="game-card">
+<img src="Minecraft-PS4-Cover.png" alt="Minecraft" class="game-image">
+            <div class="game-info">
+                <h2>Minecraft (ماينكرافت)</h2>
+                <p>CUSA00265 | الحجم: متوفر للتحميل المباشر</p>
+            </div>
+            <div class="btn-group">
+                <button class="btn-base" onclick="installPkg('https://archive.org/download/super-psx-minecraft.-play-station-4.-edition-cusa-00265-v-1.00-1.70-ps-4/%5BSuperPSX%5D-Minecraft.PlayStation4.Edition_CUSA00265_v1.00_%5B1.70%5D-PS4.pkg')">تثبيت اللعبة (Base Game)</button>
+                <button class="btn-update" onclick="installPkg('http://192.168.1.100:8080/Minecraft_Update.pkg')">تثبيت التحديث (Update)</button>
+            </div>
+        </div>
+
+        <!-- خانة عني / المطور -->
+        <div class="about-section">
+            <h3>📌 عني (About Me)</h3>
+            <p>
+                مرحباً بكم في متجر <strong>yalipser Store</strong>! أنا مطور مستقل واسمي 
+                <span class="developer-tag">ياسر (Yasir)</span>، وهذا المشروع بالكامل من إنتاجي وتطويري لتسهيل تثبيت الألعاب وتحديثاتها مباشرة عبر شبكة الـ PS4 وخدمة GoldHEN.
+            </p>
+        </div>
+
+    </div>
+
+    <div id="notification">جاري إرسال أمر التثبيت إلى GoldHEN...</div>
+
+    <script>
+        function installPkg(pkgUrl) {
+            const notify = document.getElementById('notification');
+            notify.style.display = 'block';
+            notify.innerText = "جاري إرسال طلب التثبيت إلى GoldHEN...";
+
+            // إرسال طلب التثبيت عبر GoldHEN Package Installer API (منفذ 12800)
+            fetch("http://127.0.0.1:12800/api/install", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    "type": "direct",
+                    "packages": [pkgUrl]
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                notify.innerText = "تم إرسال اللعبة بنجاح! تفقد قائمة التنزيلات في السوني.";
+                setTimeout(() => { notify.style.display = 'none'; }, 4000);
+            })
+            .catch(err => {
+                notify.innerText = "تم إرسال الأمر (تأكد من تفعيل Server في GoldHEN).";
+                setTimeout(() => { notify.style.display = 'none'; }, 4000);
+            });
+        }
+    </script>
+</body>
+</html>
